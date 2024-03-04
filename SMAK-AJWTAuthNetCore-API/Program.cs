@@ -23,6 +23,15 @@ namespace SMAK_AJWTAuthNetCore_API
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
             builder.Services.AddControllers();
 
+            // Add CORS policy
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder => builder.AllowAnyOrigin()
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader());
+            });
+
             //Add the Custom services in IOC container
             builder.Services.AddScoped<IUsersRepository<ApplicationUser>, UsersRepository>();
             builder.Services.AddScoped<IUserService<ApplicationUser>, UserService>();
@@ -100,6 +109,7 @@ namespace SMAK_AJWTAuthNetCore_API
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowAllOrigins"); // Apply CORS policy
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
