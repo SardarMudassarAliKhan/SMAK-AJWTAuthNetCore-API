@@ -1,11 +1,4 @@
-﻿using SMAK_AJWTAuthNetCore_Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SMAK_AJWTAuthNetCore_Core.Interfaces
+﻿namespace SMAK_AJWTAuthNetCore_Core.Interfaces
 {
     public interface IUsersRepository<T>
     {

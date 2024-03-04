@@ -1,6 +1,4 @@
 ﻿using SMAK_AJWTAuthNetCore_Core.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace SMAK_AJWTAuthNetCore_Services.Services
