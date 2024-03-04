@@ -40,7 +40,7 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
             ApplicationUser appUser = new ApplicationUser
             {
-                UserName = registerVM.Name,
+                Name = registerVM.Name,
                 AccountType = registerVM.AccountType,
                 Email = registerVM.Email,
                 PhoneNumber = registerVM.PhoneNo,
