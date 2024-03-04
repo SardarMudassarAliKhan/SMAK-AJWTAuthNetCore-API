@@ -14,14 +14,14 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<RegisterRequestModel> UserManager;
+        private readonly UserManager<ApplicationUser> UserManager;
         private readonly RoleManager<IdentityRole> RoleManager;
-        private readonly SignInManager<RegisterRequestModel> SignInManager;
+        private readonly SignInManager<ApplicationUser> SignInManager;
         private readonly JsonWebTokenKeys JsonWebTokenKeys;
         public AuthController
         (
-            UserManager<RegisterRequestModel> userManager,
-            SignInManager<RegisterRequestModel> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager,
             JsonWebTokenKeys jsonWebTokenKeys)
         {
@@ -33,12 +33,12 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserModelcs registerVM)
+        public async Task<IActionResult> Register([FromBody] RegisterVM registerVM)
         {
             var IsExist = await UserManager.FindByNameAsync(registerVM.Name);
             if (IsExist != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
-            RegisterRequestModel appUser = new RegisterRequestModel
+            ApplicationUser appUser = new ApplicationUser
             {
                 UserName = registerVM.Name,
                 AccountType = registerVM.AccountType,

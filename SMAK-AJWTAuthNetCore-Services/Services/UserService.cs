@@ -3,17 +3,17 @@ using SMAK_AJWTAuthNetCore_Core.Interfaces;
 
 namespace SMAK_AJWTAuthNetCore_Services.Services
 {
-    public class UserService : IUserService<RegisterRequestModel>
+    public class UserService : IUserService<ApplicationUser>
     {
-        private readonly IUsersRepository<RegisterRequestModel> _usersRepository;
+        private readonly IUsersRepository<ApplicationUser> _usersRepository;
 
-        public UserService(IUsersRepository<RegisterRequestModel> usersRepository)
+        public UserService(IUsersRepository<ApplicationUser> usersRepository)
         {
             _usersRepository = usersRepository ?? throw new ArgumentNullException(nameof(usersRepository));
         }
 
         // Create a new user
-        public async Task<RegisterRequestModel> Create(RegisterRequestModel _object)
+        public async Task<ApplicationUser> Create(ApplicationUser _object)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace SMAK_AJWTAuthNetCore_Services.Services
         }
 
         // Delete an existing user
-        public void Delete(RegisterRequestModel _object)
+        public void Delete(ApplicationUser _object)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace SMAK_AJWTAuthNetCore_Services.Services
         }
 
         // Retrieve all users
-        public IEnumerable<RegisterRequestModel> GetAll()
+        public IEnumerable<ApplicationUser> GetAll()
         {
             try
             {
@@ -66,7 +66,7 @@ namespace SMAK_AJWTAuthNetCore_Services.Services
         }
 
         // Retrieve user by ID
-        public RegisterRequestModel GetById(string Id)
+        public ApplicationUser GetById(string Id)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace SMAK_AJWTAuthNetCore_Services.Services
         }
 
         // Update an existing user
-        public void Update(RegisterRequestModel _object)
+        public void Update(ApplicationUser _object)
         {
             try
             {

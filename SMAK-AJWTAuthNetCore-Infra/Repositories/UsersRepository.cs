@@ -5,25 +5,25 @@ using SMAK_AJWTAuthNetCore_Infra.Data;
 
 namespace SMAK_AJWTAuthNetCore_Infra.Repositories
 {
-    public class UsersRepository : IUsersRepository<RegisterRequestModel>, IDisposable
+    public class UsersRepository : IUsersRepository<ApplicationUser>, IDisposable
     {
         private readonly AppDbContext _appDbContext;
         private readonly ILogger _logger;
 
-        public UsersRepository(ILogger<RegisterRequestModel> logger, AppDbContext appDbContext)
+        public UsersRepository(ILogger<ApplicationUser> logger, AppDbContext appDbContext)
         {
             _logger = logger;
             _appDbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
         }
 
         // Create a new user
-        public async Task<RegisterRequestModel> Create(RegisterRequestModel appuser)
+        public async Task<ApplicationUser> Create(ApplicationUser appuser)
         {
             try
             {
                 if (appuser != null)
                 {
-                    var obj = _appDbContext.Add<RegisterRequestModel>(appuser);
+                    var obj = _appDbContext.Add<ApplicationUser>(appuser);
                     await _appDbContext.SaveChangesAsync();
                     return obj.Entity;
                 }
@@ -40,7 +40,7 @@ namespace SMAK_AJWTAuthNetCore_Infra.Repositories
         }
 
         // Delete an existing user
-        public void Delete(RegisterRequestModel appuser)
+        public void Delete(ApplicationUser appuser)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace SMAK_AJWTAuthNetCore_Infra.Repositories
         }
 
         // Retrieve all users
-        public IEnumerable<RegisterRequestModel> GetAll()
+        public IEnumerable<ApplicationUser> GetAll()
         {
             try
             {
@@ -79,7 +79,7 @@ namespace SMAK_AJWTAuthNetCore_Infra.Repositories
         }
 
         // Retrieve user by ID
-        public RegisterRequestModel GetById(string Id)
+        public ApplicationUser GetById(string Id)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace SMAK_AJWTAuthNetCore_Infra.Repositories
         }
 
         // Update an existing user
-        public void Update(RegisterRequestModel appuser)
+        public void Update(ApplicationUser appuser)
         {
             try
             {

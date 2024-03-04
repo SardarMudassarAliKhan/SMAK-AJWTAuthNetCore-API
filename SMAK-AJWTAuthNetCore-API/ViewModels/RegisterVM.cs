@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace SMAK_AJWTAuthNetCore_Core.Entities
+﻿namespace SMAK_AJWTAuthNetCore_API.ViewModels
 {
-    public class RegisterRequestModel : IdentityUser
+    public class RegisterVM
     {
         public string? Name { get; set; }
+        public string? Email { get; set; }
         public string? AccountType { get; set; }
         public string? PhoneNo { get; set; }
         public string? Password { get; set; }
@@ -12,3 +11,4 @@ namespace SMAK_AJWTAuthNetCore_Core.Entities
         public bool? IsDeleted { get; set; }
     }
 }
+    
