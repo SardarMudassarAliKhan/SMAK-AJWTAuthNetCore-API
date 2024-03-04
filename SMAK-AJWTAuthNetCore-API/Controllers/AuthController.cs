@@ -20,8 +20,8 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
         private readonly JsonWebTokenKeys JsonWebTokenKeys;
         public AuthController
         (
-            UserManager<RegisterRequestModel> userManager, 
-            SignInManager<RegisterRequestModel> signInManager, 
+            UserManager<RegisterRequestModel> userManager,
+            SignInManager<RegisterRequestModel> signInManager,
             RoleManager<IdentityRole> roleManager,
             JsonWebTokenKeys jsonWebTokenKeys)
         {
