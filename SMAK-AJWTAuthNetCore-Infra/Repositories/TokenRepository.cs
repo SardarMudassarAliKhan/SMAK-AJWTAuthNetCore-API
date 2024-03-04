@@ -32,6 +32,7 @@ namespace SMAK_AJWTAuthNetCore_Infra.Repositories
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
             return tokenString;
         }
+
         public string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
@@ -41,15 +42,16 @@ namespace SMAK_AJWTAuthNetCore_Infra.Repositories
                 return Convert.ToBase64String(randomNumber);
             }
         }
+
         public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
-                ValidateAudience = JsonWebTokenKeys.ValidateAudience, // you might want to validate the audience and issuer depending on your use case
-                ValidateIssuer = JsonWebTokenKeys.ValidateIssuer,
+                ValidateAudience = false, // you might want to validate the audience and issuer depending on your use case
+                ValidateIssuer = false,
                 ValidateIssuerSigningKey = true, // assuming this should always be true for security reasons
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JsonWebTokenKeys.IssuerSigningKey)),
-                ValidateLifetime = JsonWebTokenKeys.ValidateLifetime
+                ValidateLifetime = false
                 //here we are saying that we don't care about the token's expiration date
             };
             var tokenHandler = new JwtSecurityTokenHandler();

@@ -79,7 +79,7 @@ namespace SMAK_AJWTAuthNetCore_Infra.Repositories
         }
 
         // Retrieve user by ID
-        public ApplicationUser GetById(string Id)
+        public ApplicationUser GetById(int Id)
         {
             try
             {
@@ -122,10 +122,60 @@ namespace SMAK_AJWTAuthNetCore_Infra.Repositories
             }
         }
 
+        public ApplicationUser GetByUserName(string userName)
+        {
+            try
+            {
+                if (userName!=null)
+                {
+                    var obj = _appDbContext.ApplicationUsers.FirstOrDefault(x => x.UserName == userName);
+                    if (obj != null)
+                        return obj;
+                    else
+                        return null;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching user");
+                throw;
+            }
+        }
+
+        public ApplicationUser GetByEmail(string email)
+        {
+            try
+            {
+                if (email != null)
+                {
+                    var obj = _appDbContext.ApplicationUsers.FirstOrDefault(x => x.Email == email);
+                    if (obj != null)
+                        return obj;
+                    else
+                        return null;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching user");
+                throw;
+            }
+        }
+
         // Dispose the repository
         public void Dispose()
         {
             _appDbContext.Dispose();
         }
+
+        
     }
 }

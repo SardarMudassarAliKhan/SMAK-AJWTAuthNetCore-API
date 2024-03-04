@@ -32,7 +32,7 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
             var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
             var username = principal.Identity.Name; //this is mapped to the Name claim by default
 
-            var user = _userContext.LoggesInUsers.SingleOrDefault(u => u.UserName == username);
+            var user = _userContext.ApplicationUsers.SingleOrDefault(u => u.UserName == username);
 
             if (user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
                 return BadRequest("Invalid client request");
@@ -56,7 +56,7 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
         {
             var username = User.Identity.Name;
 
-            var user = _userContext.LoggesInUsers.SingleOrDefault(u => u.UserName == username);
+            var user = _userContext.ApplicationUsers.SingleOrDefault(u => u.UserName == username);
             if (user == null) return BadRequest();
 
             user.RefreshToken = null;

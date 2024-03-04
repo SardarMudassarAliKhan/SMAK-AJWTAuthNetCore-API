@@ -10,6 +10,10 @@
 
         public IEnumerable<T> GetAll();
 
-        public T GetById(string Id);
+        public T GetById(int Id);
+
+        public T GetByUserName(string userName);
+
+        public T GetByEmail(string email);
     }
 }

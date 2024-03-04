@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SMAK_AJWTAuthNetCore_Infra.Data;
 
@@ -11,9 +12,11 @@ using SMAK_AJWTAuthNetCore_Infra.Data;
 namespace SMAK_AJWTAuthNetCore_Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class ApplDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240304182739_M4-030424")]
+    partial class M4030424
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,7 +161,6 @@ namespace SMAK_AJWTAuthNetCore_Infra.Migrations
             modelBuilder.Entity("SMAK_AJWTAuthNetCore_Core.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")

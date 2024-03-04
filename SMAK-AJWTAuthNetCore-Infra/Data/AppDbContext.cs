@@ -12,8 +12,5 @@ namespace SMAK_AJWTAuthNetCore_Infra.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-
-        public DbSet<LoginRequestModel>? LoggesInUsers { get; set; }
-
     }
 }

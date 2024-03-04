@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SMAK_AJWTAuthNetCore_Infra.Data;
 
@@ -11,9 +12,11 @@ using SMAK_AJWTAuthNetCore_Infra.Data;
 namespace SMAK_AJWTAuthNetCore_Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class ApplDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240304184713_M5-030424")]
+    partial class M5030424
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

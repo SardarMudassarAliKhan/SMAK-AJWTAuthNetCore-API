@@ -66,11 +66,11 @@ namespace SMAK_AJWTAuthNetCore_Services.Services
         }
 
         // Retrieve user by ID
-        public ApplicationUser GetById(string Id)
+        public ApplicationUser GetById(int Id)
         {
             try
             {
-                if (string.IsNullOrEmpty(Id))
+                if (Id==null)
                 {
                     throw new ArgumentException("Id cannot be null or empty", nameof(Id));
                 }
