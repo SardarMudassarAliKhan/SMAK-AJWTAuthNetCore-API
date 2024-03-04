@@ -28,6 +28,7 @@ namespace SMAK_AJWTAuthNetCore_API
             builder.Services.AddScoped<IUserService<ApplicationUser>, UserService>();
             builder.Services.AddScoped<ITokenRepository, TokenRepository>();
             builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddScoped<JsonWebTokenKeys>(); // Example registration
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
