@@ -10,6 +10,6 @@
 
         public IEnumerable<TUser> GetAll();
 
-        public TUser GetById(string Id);
+        public TUser GetById(int Id);
     }
 }
