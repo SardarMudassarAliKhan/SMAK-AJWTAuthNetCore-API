@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using SMAK_AJWTAuthNetCore_API.Commons;
 using SMAK_AJWTAuthNetCore_API.ViewModels;
 using SMAK_AJWTAuthNetCore_Core.Entities;
 using SMAK_AJWTAuthNetCore_Core.Interfaces;
-using SMAK_AJWTAuthNetCore_Services.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 
 namespace SMAK_AJWTAuthNetCore_API.Controllers
 {
@@ -21,6 +18,7 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
         private readonly SignInManager<ApplicationUser> SignInManager;
         private readonly JsonWebTokenKeys JsonWebTokenKeys;
         private readonly ITokenService TokenService;
+        public readonly IUsersRepository<ApplicationUser> UsersRepository;
 
         public AuthController
         (
@@ -28,30 +26,35 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
             SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager,
             JsonWebTokenKeys jsonWebTokenKeys,
-            ITokenService tokenService)
+            ITokenService tokenService,
+            IUsersRepository<ApplicationUser> usersRepository)
         {
             this.UserManager = userManager;
             this.RoleManager = roleManager;
             this.SignInManager = signInManager;
             this.JsonWebTokenKeys = jsonWebTokenKeys;
             this.TokenService = tokenService;
+            UsersRepository = usersRepository;
         }
 
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterVM registerVM)
         {
-            var IsExist = await UserManager.FindByNameAsync(registerVM.Name);
+            var IsExist = UsersRepository.GetByEmail(registerVM.Email);
             if (IsExist != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
             ApplicationUser appUser = new ApplicationUser
             {
                 Name = registerVM.Name,
+                UserName = registerVM.Name,
                 AccountType = registerVM.AccountType,
                 Email = registerVM.Email,
                 PhoneNumber = registerVM.PhoneNo,
                 Password = registerVM.Password,
                 UserRole = registerVM.UserRole,
+                RefreshToken = TokenService.GenerateRefreshToken(),
+                RefreshTokenExpiryTime = DateTime.Now.AddDays(7),
                 IsDeleted = registerVM.IsDeleted
             };
             var result = await UserManager.CreateAsync(appUser, registerVM.Password);
@@ -70,8 +73,7 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginVM loginVM)
         {
-            //var user1 = await userManager.FindByIdAsync(loginVM.Id);
-            var user = await UserManager.FindByNameAsync(loginVM.UserName);
+            var user = UsersRepository.GetByEmail(loginVM.Email);
             if (user != null && await UserManager.CheckPasswordAsync(user, loginVM.Password))
             {
                 var userRoles = await UserManager.GetRolesAsync(user);
@@ -91,6 +93,11 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
 
                 var accessToken = TokenService.GenerateAccessToken(authClaims);
                 var refreshToken = TokenService.GenerateRefreshToken();
+
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
+
+                UsersRepository.Update(user);
 
                 return Ok(new
                 {
