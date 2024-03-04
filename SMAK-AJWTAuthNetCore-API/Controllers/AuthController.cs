@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using SMAK_AJWTAuthNetCore_API.Commons;
 using SMAK_AJWTAuthNetCore_API.ViewModels;
 using SMAK_AJWTAuthNetCore_Core.Entities;
+using SMAK_AJWTAuthNetCore_Core.Interfaces;
+using SMAK_AJWTAuthNetCore_Services.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,17 +20,21 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
         private readonly RoleManager<IdentityRole> RoleManager;
         private readonly SignInManager<ApplicationUser> SignInManager;
         private readonly JsonWebTokenKeys JsonWebTokenKeys;
+        private readonly ITokenService TokenService;
+
         public AuthController
         (
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager,
-            JsonWebTokenKeys jsonWebTokenKeys)
+            JsonWebTokenKeys jsonWebTokenKeys,
+            ITokenService tokenService)
         {
             this.UserManager = userManager;
             this.RoleManager = roleManager;
             this.SignInManager = signInManager;
             this.JsonWebTokenKeys = jsonWebTokenKeys;
+            this.TokenService = tokenService;
         }
 
         [HttpPost]
@@ -83,18 +89,13 @@ namespace SMAK_AJWTAuthNetCore_API.Controllers
                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                 }
 
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JsonWebTokenKeys.IssuerSigningKey));
-
-                var token = new JwtSecurityToken(
-                    expires: DateTime.Now.AddHours(3),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                    );
+                var accessToken = TokenService.GenerateAccessToken(authClaims);
+                var refreshToken = TokenService.GenerateRefreshToken();
 
                 return Ok(new
                 {
-                    api_key = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo,
+                    Token = accessToken,
+                    RefreshToken = refreshToken,
                     user = user,
                     Role = userRoles,
                     status = "User Login Successfully"
