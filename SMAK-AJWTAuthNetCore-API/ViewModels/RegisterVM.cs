@@ -1,6 +1,6 @@
 ﻿namespace SMAK_AJWTAuthNetCore_API.ViewModels
 {
-    public class RegisterUserModelcs
+    public class RegisterVM
     {
         public string? Name { get; set; }
         public string? Email { get; set; }

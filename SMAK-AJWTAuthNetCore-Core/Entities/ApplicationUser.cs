@@ -2,7 +2,7 @@
 
 namespace SMAK_AJWTAuthNetCore_Core.Entities
 {
-    public class RegisterRequestModel : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         public string? Name { get; set; }
         public string? AccountType { get; set; }

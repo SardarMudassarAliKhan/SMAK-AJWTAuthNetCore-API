@@ -23,7 +23,7 @@ namespace SMAK_AJWTAuthNetCore_Core.Entities
             this.ValidIssuer = configuration["JsonWebTokenKeys:ValidIssuer"];
             this.ValidateAudience = bool.Parse(configuration["JsonWebTokenKeys:ValidateAudience"]);
             this.ValidAudience = configuration["JsonWebTokenKeys:ValidAudience"];
-            this.RequireExpirationTime = bool.Parse(configuration["JsonWebTokenKeys:Require"]);
+            this.RequireExpirationTime = bool.Parse(configuration["JsonWebTokenKeys:RequireExpirationTime"]);
             this.ValidateLifetime = bool.Parse(configuration["JsonWebTokenKeys:ValidateLifetime"]);
         }
     }
