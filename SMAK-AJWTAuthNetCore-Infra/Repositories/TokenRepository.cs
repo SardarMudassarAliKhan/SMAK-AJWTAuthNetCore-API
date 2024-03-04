@@ -13,9 +13,9 @@ namespace SMAK_AJWTAuthNetCore_Infra.Repositories
     {
         private readonly JsonWebTokenKeys JsonWebTokenKeys;
 
-        public TokenRepository(IOptions<JsonWebTokenKeys> jsonWebTokenKeys)
+        public TokenRepository(JsonWebTokenKeys jsonWebTokenKeys)
         {
-            this.JsonWebTokenKeys = jsonWebTokenKeys.Value;
+            this.JsonWebTokenKeys = jsonWebTokenKeys;
         }
 
         public string GenerateAccessToken(IEnumerable<Claim> claims)
