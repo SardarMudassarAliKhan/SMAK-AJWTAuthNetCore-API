@@ -1,0 +1,1 @@
+# SMAK-AJWTAuthNetCore-API-BackEnd
