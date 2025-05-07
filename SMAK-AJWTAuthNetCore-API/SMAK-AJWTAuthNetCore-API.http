@@ -1,0 +1,6 @@
+@SMAK_AJWTAuthNetCore_API_HostAddress = http://localhost:5283
+
+GET {{SMAK_AJWTAuthNetCore_API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
